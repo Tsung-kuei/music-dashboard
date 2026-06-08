@@ -14,7 +14,7 @@ Music consumption has shifted from album sales to streaming metrics and chart ra
 
 | Source | Data Type | Volume | Method |
 |--------|-----------|--------|--------|
-| Spotify Charts (Kaggle) | Historical daily CSV | ~5 M rows, 2017–2023 | One-time ETL via `etl_spotify_csv.py` |
+| Spotify Charts (Kaggle) | Historical daily CSV | 730,159 rows (7 regions, 2017–2021) | One-time ETL via `etl_spotify_csv.py` |
 | Billboard Hot 100 | Weekly live scrape | 100 rows/week | Daily via `billboard.py` library |
 
 **ETL steps:**
@@ -60,7 +60,7 @@ The dashboard sidebar displays the last pipeline run timestamp so viewers can ve
 
 ## Deployment URL
 
-> _To be filled in after Streamlit Cloud deployment_
+**https://tsung-kuei-music-dashboard.streamlit.app/**
 
 ---
 
