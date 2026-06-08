@@ -68,7 +68,13 @@ else:
         .pivot(index="region", columns="month", values="total_streams")
     )
 
-    top_regions = df.groupby("region")["total_streams"].sum().nlargest(20).index
+    # Exclude "Global" — it aggregates all countries and dominates the color scale,
+    # making individual country differences invisible.
+    top_regions = (
+        df[df["region"] != "Global"]
+        .groupby("region")["total_streams"]
+        .sum().nlargest(20).index
+    )
     pivot = pivot.loc[pivot.index.isin(top_regions)]
 
     fig = px.imshow(
@@ -76,8 +82,9 @@ else:
         color_continuous_scale="Viridis",
         labels={"color": "Streams (M)", "x": "Month"},
         aspect="auto",
-        height=600,
+        height=500,
     )
     fig.update_layout(title_text="")
     fig.update_yaxes(title_text="")
     st.plotly_chart(fig, use_container_width=True)
+    st.caption("Global region excluded — as a worldwide aggregate it would dominate the color scale and hide country-level differences.")
