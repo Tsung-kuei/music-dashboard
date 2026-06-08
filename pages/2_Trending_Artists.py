@@ -38,10 +38,10 @@ filtered = df[df["artist"].isin(top_artists)]
 fig = px.line(
     filtered, x="fetch_date", y="entries",
     color="artist", markers=True,
-    labels={"fetch_date": "Date", "entries": "Songs in Hot 100"},
+    labels={"fetch_date": "Date", "entries": "Songs in Hot 100", "artist": "Artist"},
     height=500,
 )
-fig.update_layout(title_text="")
+fig.update_layout(title_text="", legend_title_text="Artist")
 st.plotly_chart(fig, use_container_width=True)
 
 best = (
@@ -51,7 +51,7 @@ best = (
 )
 st.subheader("Best peak rank per artist")
 fig2 = px.bar(best, x="artist", y="best_rank",
-              labels={"best_rank": "Rank (lower = better)"},
+              labels={"best_rank": "Rank (lower = better)", "artist": "Artist"},
               color="best_rank", color_continuous_scale="RdYlGn_r")
 fig2.update_layout(coloraxis_showscale=False, title_text="")
 st.plotly_chart(fig2, use_container_width=True)

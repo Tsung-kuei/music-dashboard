@@ -39,7 +39,7 @@ if spotify_count == 0:
     fig = px.imshow(
         pivot,
         color_continuous_scale="RdYlGn_r",
-        labels={"color": "Best Rank", "x": "Month", "y": "Artist"},
+        labels={"color": "Best Rank", "x": "Month"},
         aspect="auto",
         height=550,
     )
@@ -73,7 +73,7 @@ else:
     fig = px.imshow(
         pivot / 1e6,
         color_continuous_scale="Viridis",
-        labels={"color": "Streams (M)", "x": "Month", "y": "Region"},
+        labels={"color": "Streams (M)", "x": "Month"},
         aspect="auto",
         height=600,
     )
