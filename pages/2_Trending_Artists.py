@@ -41,7 +41,7 @@ fig = px.line(
     labels={"fetch_date": "Date", "entries": "Songs in Hot 100"},
     height=500,
 )
-fig.update_layout(title=None)
+fig.update_layout(title_text="")
 st.plotly_chart(fig, use_container_width=True)
 
 best = (
@@ -53,5 +53,5 @@ st.subheader("Best peak rank per artist")
 fig2 = px.bar(best, x="artist", y="best_rank",
               labels={"best_rank": "Rank (lower = better)"},
               color="best_rank", color_continuous_scale="RdYlGn_r")
-fig2.update_layout(coloraxis_showscale=False, title=None)
+fig2.update_layout(coloraxis_showscale=False, title_text="")
 st.plotly_chart(fig2, use_container_width=True)

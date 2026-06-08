@@ -54,7 +54,7 @@ fig = px.scatter(
     labels={"rank": "Chart Rank", "streams": "Streams"},
     opacity=0.6, height=500,
 )
-fig.update_layout(showlegend=False, title=None)
+fig.update_layout(showlegend=False, title_text="")
 st.plotly_chart(fig, use_container_width=True)
 
 st.subheader(f"Top 15 songs by total streams — {region} {selected_year}")
@@ -70,5 +70,5 @@ fig2 = px.bar(
     labels={"streams": "Total Streams", "track_name": "Song"},
     height=480,
 )
-fig2.update_layout(showlegend=False, yaxis_title="", title=None)
+fig2.update_layout(showlegend=False, yaxis_title="", title_text="")
 st.plotly_chart(fig2, use_container_width=True)

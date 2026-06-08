@@ -39,11 +39,11 @@ if spotify_count == 0:
     fig = px.imshow(
         pivot,
         color_continuous_scale="RdYlGn_r",
-        labels={"color": "Best Rank"},
+        labels={"color": "Best Rank", "x": "Month", "y": "Artist"},
         aspect="auto",
         height=550,
     )
-    fig.update_layout(title=None)
+    fig.update_layout(title_text="")
     st.plotly_chart(fig, use_container_width=True)
     st.caption("Best rank per month per artist. Lower value = higher chart position.")
 
@@ -73,9 +73,9 @@ else:
     fig = px.imshow(
         pivot / 1e6,
         color_continuous_scale="Viridis",
-        labels={"color": "Streams (M)"},
+        labels={"color": "Streams (M)", "x": "Month", "y": "Region"},
         aspect="auto",
         height=600,
     )
-    fig.update_layout(title=None)
+    fig.update_layout(title_text="")
     st.plotly_chart(fig, use_container_width=True)

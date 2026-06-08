@@ -42,11 +42,18 @@ fig = px.bar(
     labels={"weeks_on_chart": "Weeks on Chart", "title": "Song"},
     height=420,
 )
-fig.update_layout(showlegend=False, yaxis_title="", title=None)
+fig.update_layout(showlegend=False, yaxis_title="", title_text="")
 st.plotly_chart(fig, use_container_width=True)
 
 st.subheader("Full Chart")
 st.dataframe(
     df[["rank", "title", "artist", "weeks_on_chart", "peak_rank"]],
+    column_config={
+        "rank": "Rank",
+        "title": "Song",
+        "artist": "Artist",
+        "weeks_on_chart": "Weeks on Chart",
+        "peak_rank": "Peak Rank",
+    },
     use_container_width=True, hide_index=True
 )
