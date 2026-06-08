@@ -47,7 +47,7 @@ fig = px.line(
     labels={"fetch_date": "Date", "rank": "Chart Rank", "label": "Song"},
     height=500,
 )
-fig.update_yaxes(autorange="reversed")
+fig.update_yaxes(range=[101, 0])
 fig.update_layout(legend_title_text="Song", title_text="")
 st.plotly_chart(fig, use_container_width=True)
 
