@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.env
+*.csv
+*.zip
+data/charts_full.db
