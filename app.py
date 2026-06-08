@@ -40,6 +40,11 @@ with sqlite3.connect(DB_PATH) as conn:
                FROM billboard_charts WHERE fetch_date = ? ORDER BY rank LIMIT 10""",
             conn, params=(latest_date,)
         )
+        full_chart = pd.read_sql(
+            """SELECT rank, title, artist, weeks_on_chart, peak_rank
+               FROM billboard_charts WHERE fetch_date = ? ORDER BY rank""",
+            conn, params=(latest_date,)
+        )
     except Exception:
         last = None
         weeks_tracked = 0
@@ -47,6 +52,7 @@ with sqlite3.connect(DB_PATH) as conn:
         top_song = None
         spotify_count = 0
         top10 = pd.DataFrame()
+        full_chart = pd.DataFrame()
 
 if last:
     st.sidebar.caption(f"Last updated: {last[0][:19]} UTC")
@@ -57,6 +63,14 @@ col1.metric("Weeks tracked", weeks_tracked if weeks_tracked else "—")
 col2.metric("Spotify records", f"{spotify_count:,}" if spotify_count else "—")
 if top_song and latest_date:
     col3.metric(f"#1 as of {latest_date}", top_song[0], top_song[1])
+
+# Page guide — visible without scrolling
+st.subheader("Pages")
+c1, c2, c3, c4 = st.columns(4)
+c1.markdown("**Trending Artists**\nArtist chart presence over time and peak rank comparison.")
+c2.markdown("**Song Trajectory**\nCompare how songs' ranks change week by week.")
+c3.markdown("**Genre Heatmap**\nMonthly Spotify streams by region (2017–2021).")
+c4.markdown("**Historical Spotlight**\nExplore any region × year in the Spotify dataset.")
 
 # Current Top 10 bar chart
 if not top10.empty:
@@ -70,19 +84,17 @@ if not top10.empty:
     fig.update_layout(showlegend=False, yaxis_title="", title_text="")
     st.plotly_chart(fig, use_container_width=True)
 
-# Page guide
-st.subheader("What's in this dashboard")
-c1, c2, c3 = st.columns(3)
-with c1:
-    st.markdown("**Overview**")
-    st.markdown("Full Billboard Hot 100 ranking for the current week, with a weeks-on-chart comparison chart.")
-    st.markdown("**Trending Artists**")
-    st.markdown("Which artists appear most often across all tracked weeks, and their best-ever peak rank.")
-with c2:
-    st.markdown("**Song Trajectory**")
-    st.markdown("Select any songs from the chart history and compare how their rank changed week by week.")
-    st.markdown("**Genre Heatmap**")
-    st.markdown("Monthly streaming volume by region across 2017–2021, visualized as an interactive heatmap.")
-with c3:
-    st.markdown("**Historical Spotlight**")
-    st.markdown("Explore any region and year from the Spotify dataset — rank vs. streams scatter plot and top 15 songs by total streams.")
+# Full chart in expander
+if not full_chart.empty:
+    with st.expander(f"Full Billboard Hot 100 — {latest_date} ({len(full_chart)} songs)"):
+        st.dataframe(
+            full_chart,
+            column_config={
+                "rank": "Rank",
+                "title": "Song",
+                "artist": "Artist",
+                "weeks_on_chart": "Weeks on Chart",
+                "peak_rank": "Peak Rank",
+            },
+            use_container_width=True, hide_index=True
+        )

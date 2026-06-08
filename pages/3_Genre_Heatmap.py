@@ -44,6 +44,7 @@ if spotify_count == 0:
         height=550,
     )
     fig.update_layout(title_text="")
+    fig.update_yaxes(title_text="")
     st.plotly_chart(fig, use_container_width=True)
     st.caption("Best rank per month per artist. Lower value = higher chart position.")
 
@@ -78,4 +79,5 @@ else:
         height=600,
     )
     fig.update_layout(title_text="")
+    fig.update_yaxes(title_text="")
     st.plotly_chart(fig, use_container_width=True)
